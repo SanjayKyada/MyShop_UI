@@ -18,7 +18,7 @@ namespace DataAccess.InMemory
         {
             products = cacheObj["Products"] as List<Product>;
             if (products == null)
-            {
+            { 
                 products = new List<Product>();
             }
         }
