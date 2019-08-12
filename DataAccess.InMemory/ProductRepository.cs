@@ -19,7 +19,7 @@ namespace DataAccess.InMemory
         {
             products = cacheObj["Products"] as List<Product>;
             if (products == null)
-            { 
+            {
                 products = new List<Product>();
             }
         }
@@ -41,7 +41,19 @@ namespace DataAccess.InMemory
             products.Add(product);
             Commit();
         }
+        // Use this function for standard practice ...
+        public void UpdateProduct(Product product, string ID)
+        {
+            Product oldProduct = IsProduct(ID);
+            oldProduct.Category = product.Category;
+            oldProduct.Description = product.Description;
+            oldProduct.Image = product.Image;
+            oldProduct.Name = product.Name;
+            oldProduct.Price = product.Price;
+            Commit();
+        }
 
+        // If you have simple product object for update..==> Normally it works. but for standard practice..call with Id separate function.
         public void UpdateProduct(Product product)
         {
             Product oldProduct = IsProduct(product.PID);
@@ -52,6 +64,7 @@ namespace DataAccess.InMemory
             oldProduct.Price = product.Price;
             Commit();
         }
+
 
         //get all products.
         public IQueryable<Product> GetAllProduct()

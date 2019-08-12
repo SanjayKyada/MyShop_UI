@@ -34,20 +34,40 @@ namespace MyShop_UI.Controllers
             return RedirectToAction("Index");
         }
         // Fetch the detail of record.
-        public ActionResult Edit(string Id)
+        public ActionResult Update(string Id)
         {
             if (ModelState.IsValid)
-                return View(repository.GetProductDetail(Id));
+                return View("Edit", repository.GetProductDetail(Id));
             else
                 throw new Exception("Invalid Model");
         }
+
+        //// For Edit Product details==>conventional way to update product.
+        //[HttpPost]
+        //public ActionResult EditProduct(Product newProductObj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repository.UpdateProduct(newProductObj);
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Invalid Model");
+        //    }
+        //}
+
+
+
+
         // For Updating Product details
+        [ActionName("Update")]
         [HttpPost]
-        public ActionResult Edit(Product newProductObj)
+        public ActionResult UpdateProduct(Product newProductObj, string id)
         {
             if (ModelState.IsValid)
             {
-                repository.UpdateProduct(newProductObj);
+                repository.UpdateProduct(newProductObj, id);
                 return RedirectToAction("Index");
             }
             else
