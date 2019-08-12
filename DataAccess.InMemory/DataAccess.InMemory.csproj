@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProductRepository.cs" />
+    <Compile Include="_Old_ProductRepository.cs" />
     <Compile Include="Product_Dynamic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

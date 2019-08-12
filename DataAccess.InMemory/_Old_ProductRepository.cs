@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.InMemory
 {
-    public class ProductRepository
+    public class _Old_ProductRepository
     {
         ObjectCache cacheObj = MemoryCache.Default;
         List<Product> products;
 
         //basic initization for product list and cache.
-        public ProductRepository()
+        public _Old_ProductRepository()
         {
             products = cacheObj["Products"] as List<Product>;
             if (products == null)
