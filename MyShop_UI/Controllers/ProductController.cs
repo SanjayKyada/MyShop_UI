@@ -10,15 +10,15 @@ namespace MyShop_UI.Controllers
 {
     public class ProductController : Controller
     {
-        ProductRepository repository;
+        Product_Dynamic<Product> repository;
         public ProductController()
         {
-            repository = new ProductRepository();
+            repository = new Product_Dynamic<Product>();
         }
         // GET: Product
         public ActionResult Index()
         {
-            return View(repository.GetAllProduct() as IQueryable);
+            return View(repository.GetAllData().ToList());
         }
 
         //Add view
@@ -30,14 +30,15 @@ namespace MyShop_UI.Controllers
         //Add ==>time of submit 
         public ActionResult Add(Product p)
         {
-            repository.InsertProduct(p);
+            repository.Add(p);
+            repository.Commit();
             return RedirectToAction("Index");
         }
         // Fetch the detail of record.
         public ActionResult Update(string Id)
         {
             if (ModelState.IsValid)
-                return View("Edit", repository.GetProductDetail(Id));
+                return View("Edit", repository.GetDetail(Id));
             else
                 throw new Exception("Invalid Model");
         }
@@ -67,7 +68,16 @@ namespace MyShop_UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.UpdateProduct(newProductObj, id);
+                Product oldProduct = repository.GetDetail(id);
+                oldProduct.Category = newProductObj.Category;
+                oldProduct.Description = newProductObj.Description;
+                oldProduct.Image = newProductObj.Image;
+                oldProduct.Name = newProductObj.Name;
+                oldProduct.Price = newProductObj.Price;
+
+                //oldProduct = newProductObj.ShallowCopy();
+                repository.Commit();
+
                 return RedirectToAction("Index");
             }
             else
@@ -80,7 +90,7 @@ namespace MyShop_UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View(repository.GetProductDetail(id));
+                return View(repository.GetDetail(id));
             }
             else
             {
@@ -94,7 +104,7 @@ namespace MyShop_UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                repository.DeleteProduct(id);
+                repository.DeleteObject(id);
                 return RedirectToAction("index");
             }
             else

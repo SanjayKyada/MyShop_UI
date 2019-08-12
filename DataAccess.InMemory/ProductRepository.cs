@@ -56,7 +56,7 @@ namespace DataAccess.InMemory
         // If you have simple product object for update..==> Normally it works. but for standard practice..call with Id separate function.
         public void UpdateProduct(Product product)
         {
-            Product oldProduct = IsProduct(product.PID);
+            Product oldProduct = IsProduct(product.Id);
             oldProduct.Category = product.Category;
             oldProduct.Description = product.Description;
             oldProduct.Image = product.Image;
@@ -83,7 +83,7 @@ namespace DataAccess.InMemory
         // for retrieving the product.
         public Product IsProduct(string productID)
         {
-            Product product = products.SingleOrDefault(x => x.PID == productID);
+            Product product = products.SingleOrDefault(x => x.Id == productID);
             if (product != null)
                 return product;
             else
