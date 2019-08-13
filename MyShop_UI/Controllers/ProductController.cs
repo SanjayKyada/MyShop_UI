@@ -5,15 +5,19 @@ using System.Web;
 using System.Web.Mvc;
 using DataAccess.InMemory;
 using Data.Model;
+using Core.Model;
+using Core.ViewModel;
 
 namespace MyShop_UI.Controllers
 {
     public class ProductController : Controller
     {
         Product_Dynamic<Product> repository;
+        Product_Dynamic<Category> categories;
         public ProductController()
         {
             repository = new Product_Dynamic<Product>();
+            categories = new Product_Dynamic<Category>();
         }
         // GET: Product
         public ActionResult Index()
@@ -24,13 +28,21 @@ namespace MyShop_UI.Controllers
         //Add view
         public ActionResult Add()
         {
-            return View();
+            Product productObj = new Product();
+            List<Category> categoryList = categories.GetAllData().ToList();
+
+            ProductCategoryModel viewModel = new ProductCategoryModel()
+            {
+                ProductObj = productObj,
+                CategoryListObj = categoryList
+            };
+            return View(viewModel);
         }
         [HttpPost]
         //Add ==>time of submit 
-        public ActionResult Add(Product p)
+        public ActionResult Add(ProductCategoryModel p)
         {
-            repository.Add(p);
+            repository.Add(p.ProductObj);
             repository.Commit();
             return RedirectToAction("Index");
         }
@@ -38,7 +50,18 @@ namespace MyShop_UI.Controllers
         public ActionResult Update(string Id)
         {
             if (ModelState.IsValid)
-                return View("Edit", repository.GetDetail(Id));
+            {
+                Product productObj = repository.GetDetail(Id);
+
+                List<Category> categoryList = categories.GetAllData().ToList();
+
+                ProductCategoryModel viewModel = new ProductCategoryModel()
+                {
+                    ProductObj = productObj,
+                    CategoryListObj = categoryList
+                };
+                return View("Edit", viewModel);
+            }
             else
                 throw new Exception("Invalid Model");
         }
@@ -64,16 +87,16 @@ namespace MyShop_UI.Controllers
         // For Updating Product details
         [ActionName("Update")]
         [HttpPost]
-        public ActionResult UpdateProduct(Product newProductObj, string id)
+        public ActionResult UpdateProduct(ProductCategoryModel newProductObj, string id)
         {
             if (ModelState.IsValid)
             {
                 Product oldProduct = repository.GetDetail(id);
-                oldProduct.Category = newProductObj.Category;
-                oldProduct.Description = newProductObj.Description;
-                oldProduct.Image = newProductObj.Image;
-                oldProduct.Name = newProductObj.Name;
-                oldProduct.Price = newProductObj.Price;
+                oldProduct.Category = newProductObj.ProductObj.Category;
+                oldProduct.Description = newProductObj.ProductObj.Description;
+                oldProduct.Image = newProductObj.ProductObj.Image;
+                oldProduct.Name = newProductObj.ProductObj.Name;
+                oldProduct.Price = newProductObj.ProductObj.Price;
 
                 //oldProduct = newProductObj.ShallowCopy();
                 repository.Commit();
