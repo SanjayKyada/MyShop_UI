@@ -12,12 +12,12 @@ namespace MyShop_UI.Controllers
 {
     public class ProductController : Controller
     {
-        Product_Dynamic<Product> repository;
-        Product_Dynamic<Category> categories;
-        public ProductController()
+        IRepositoryBase<Product> repository;
+        IRepositoryBase<Category> categories;
+        public ProductController(IRepositoryBase<Product> productObj, IRepositoryBase<Category> categoryObj)
         {
-            repository = new Product_Dynamic<Product>();
-            categories = new Product_Dynamic<Category>();
+            repository = productObj;
+            categories = categoryObj;
         }
         // GET: Product
         public ActionResult Index()

@@ -6,12 +6,13 @@ using System.Runtime.Caching;
 
 namespace DataAccess.InMemory
 {
-    public class Product_Dynamic<DC> where DC : AbsBase
+    public class Repository<DC> : IRepositoryBase<DC> where DC : AbsBase
     {
         ObjectCache dyCacheObj = MemoryCache.Default;
         List<DC> dynamicClassObj;
         string name;
-        public Product_Dynamic()
+
+        public Repository()
         {
             name = typeof(DC).Name;
             dynamicClassObj = dyCacheObj[name] as List<DC>;

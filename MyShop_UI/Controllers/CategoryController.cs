@@ -10,11 +10,11 @@ namespace MyShop_UI.Controllers
 {
     public class CategoryController : Controller
     {
-        Product_Dynamic<Category> categories;
+        IRepositoryBase<Category> categories;
 
-        public CategoryController()
+        public CategoryController(Repository<Category> categoryObj)
         {
-            categories = new Product_Dynamic<Category>();
+            categories = categoryObj;
         }
 
         // GET: Category
