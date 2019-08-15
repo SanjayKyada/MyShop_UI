@@ -307,6 +307,10 @@
       <Project>{44d9a9f0-8db5-461c-a24d-3ddc91b28b86}</Project>
       <Name>DataAccess.InMemory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataAccess.SQL\DataAccess.SQL.csproj">
+      <Project>{3D333689-2C02-476F-A249-CD948C0530A9}</Project>
+      <Name>DataAccess.SQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Data\Core.csproj">
       <Project>{302466fc-fa80-43c1-a3c5-03e92b727e41}</Project>
       <Name>Core</Name>

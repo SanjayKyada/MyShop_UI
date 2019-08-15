@@ -12,7 +12,7 @@ namespace MyShop_UI.Controllers
     {
         IRepositoryBase<Category> categories;
 
-        public CategoryController(Repository<Category> categoryObj)
+        public CategoryController(IRepositoryBase<Category> categoryObj)
         {
             categories = categoryObj;
         }

@@ -10,5 +10,6 @@ namespace DataAccess.InMemory
         void DeleteObject(string ID);
         IQueryable<DC> GetAllData();
         DC GetDetail(string ID);
+        void Update(DC d);
     }
 }

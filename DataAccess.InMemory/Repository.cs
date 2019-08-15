@@ -53,6 +53,10 @@ namespace DataAccess.InMemory
             dynamicClassObj.Remove(dcObj);
         }
 
+        public void Update(DC d)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

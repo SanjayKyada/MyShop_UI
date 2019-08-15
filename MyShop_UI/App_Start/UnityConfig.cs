@@ -1,6 +1,7 @@
 using Core.Model;
 using Data.Model;
 using DataAccess.InMemory;
+using DataAccess.SQL;
 using System;
 
 using Unity;
@@ -46,8 +47,8 @@ namespace MyShop_UI
             // TODO: Register your type's mappings here.
 
             //==> Below lines are used for solve ==> Passing object's in controller at runtime in their constructor.
-            container.RegisterType<IRepositoryBase<Product>, Repository<Product>>();
-            container.RegisterType<IRepositoryBase<Category>, Repository<Category>>();
+            container.RegisterType<IRepositoryBase<Product>, SqlRepository<Product>>();
+            container.RegisterType<IRepositoryBase<Category>, SqlRepository<Category>>();
 
         }
     }
