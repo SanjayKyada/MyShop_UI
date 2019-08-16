@@ -1,10 +1,9 @@
 ﻿using Core.Model;
+using Core.ViewModel;
 using Data.Model;
 using DataAccess.InMemory;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MyShop_UI.Controllers
@@ -21,9 +20,22 @@ namespace MyShop_UI.Controllers
         }
 
         //Listing all products in a closer look to products view listing....
-        public ActionResult Index()
+        public ActionResult Index(string Category = null)
         {
-            return View(productRepository.GetAllData().ToList());
+            List<Product> products;
+            List<Category> categories = categoryRepository.GetAllData().ToList();
+
+            if (Category == null)
+                products = productRepository.GetAllData().ToList();
+            else
+                products = productRepository.GetAllData().Where(x => x.Category == Category).ToList();
+
+            ProductListViewModel model = new ProductListViewModel()
+            {
+                CategoryListObj = categories,
+                ProductObj = products
+            };
+            return View(model);
         }
         //get full detail of particular product.
         public ActionResult Detail(string Id)
