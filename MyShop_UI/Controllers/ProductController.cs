@@ -7,6 +7,7 @@ using DataAccess.InMemory;
 using Data.Model;
 using Core.Model;
 using Core.ViewModel;
+using System.IO;
 
 namespace MyShop_UI.Controllers
 {
@@ -40,8 +41,13 @@ namespace MyShop_UI.Controllers
         }
         [HttpPost]
         //Add ==>time of submit 
-        public ActionResult Add(ProductCategoryModel p)
+        public ActionResult Add(ProductCategoryModel p, HttpPostedFileBase fileObj)
         {
+            if (fileObj != null)
+            {
+                p.ProductObj.Image = p.ProductObj.Id + fileObj.FileName + Path.GetExtension(fileObj.FileName);
+                fileObj.SaveAs(Server.MapPath("//Content//ProductImages//" + p.ProductObj.Image));
+            }
             repository.Add(p.ProductObj);
             repository.Commit();
             return RedirectToAction("Index");
@@ -87,14 +93,22 @@ namespace MyShop_UI.Controllers
         // For Updating Product details
         [ActionName("Update")]
         [HttpPost]
-        public ActionResult UpdateProduct(ProductCategoryModel newProductObj, string id)
+        public ActionResult UpdateProduct(ProductCategoryModel newProductObj, string id, HttpPostedFileBase fileObj)
         {
             if (ModelState.IsValid)
             {
                 Product oldProduct = repository.GetDetail(id);
+
+                string ImageFileName = newProductObj.ProductObj.Image;
+                if (fileObj != null)
+                {
+                    ImageFileName = newProductObj.ProductObj.Id + fileObj.FileName + Path.GetExtension(fileObj.FileName);
+                    fileObj.SaveAs(Server.MapPath("//Content//ProductImages//") + ImageFileName);
+                }
+
                 oldProduct.Category = newProductObj.ProductObj.Category;
                 oldProduct.Description = newProductObj.ProductObj.Description;
-                oldProduct.Image = newProductObj.ProductObj.Image;
+                oldProduct.Image = ImageFileName;
                 oldProduct.Name = newProductObj.ProductObj.Name;
                 oldProduct.Price = newProductObj.ProductObj.Price;
 
@@ -105,7 +119,9 @@ namespace MyShop_UI.Controllers
             }
             else
             {
-                throw new Exception("Invalid Model");
+                var errors = ModelState.SelectMany(x => x.Value.Errors.Select(z => z.Exception));
+
+                throw new Exception(errors.ToString());
             }
         }
         // for redirecting Confirm delete page.
