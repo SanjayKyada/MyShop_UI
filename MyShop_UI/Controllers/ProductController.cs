@@ -144,6 +144,7 @@ namespace MyShop_UI.Controllers
             if (ModelState.IsValid)
             {
                 repository.DeleteObject(id);
+                repository.Commit();
                 return RedirectToAction("index");
             }
             else
