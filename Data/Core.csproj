@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="AbsBase.cs" />
     <Compile Include="Contract\IRepositoryBase.cs" />
+    <Compile Include="Model\Basket.cs" />
+    <Compile Include="Model\BasketItem.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
