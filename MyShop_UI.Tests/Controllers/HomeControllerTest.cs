@@ -1,54 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
+﻿using Core.Contract;
+using Core.Model;
+using Core.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MyShop_UI;
-using MyShop_UI.Controllers;
+using MyShop_UI.Tests.Mocks;
+using System.Web.Mvc;
 
 namespace MyShop_UI.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class _HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void ContextTesting()
         {
-            // Arrange
-            HomeController controller = new HomeController();
+            IRepositoryBase<Product> prjObj = new ContextTest<Product>();
+            IRepositoryBase<Category> catObj = new ContextTest<Category>();
 
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
+            prjObj.Add(new Product());
 
-            // Assert
-            Assert.IsNotNull(result);
+            MyShop_UI.Controllers.HomeController homeController = new MyShop_UI.Controllers.HomeController(prjObj, catObj);
+            ViewResult results = homeController.Index() as ViewResult;
+            var model = (ProductListViewModel)results.ViewData.Model;
+
+            Assert.AreEqual(1, model.ProductObj.Count);
         }
 
-        [TestMethod]
-        public void About()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
-        }
-
-        [TestMethod]
-        public void Contact()
-        {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.Contact() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
     }
 }
