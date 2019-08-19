@@ -21,6 +21,7 @@ namespace MyShop_UI.Controllers
         //Listing all products in a closer look to products view listing....
         public ActionResult Index(string Category = null)
         {
+            if (!ModelState.IsValid) { return View(); }
             List<Product> products;
             List<Category> categories = categoryRepository.GetAllData().ToList();
 
