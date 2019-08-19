@@ -17,9 +17,9 @@ namespace Core.Model
         {
 
         }
-        public Product ShallowCopy()
-        {
-            return (Product)this.MemberwiseClone();
-        }
+        //public Product ShallowCopy()
+        //{
+        //    return (Product)this.MemberwiseClone();
+        //}
     }
 }
