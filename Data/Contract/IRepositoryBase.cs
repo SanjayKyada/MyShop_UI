@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using Core;
 
-namespace DataAccess.InMemory
+namespace Core.Contract
 {
     public interface IRepositoryBase<DC> where DC : AbsBase
     {

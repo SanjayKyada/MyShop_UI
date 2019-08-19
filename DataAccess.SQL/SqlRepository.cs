@@ -1,11 +1,7 @@
 ﻿using Core;
-using DataAccess.InMemory;
-using System;
-using System.Collections.Generic;
+using Core.Contract;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.SQL
 {

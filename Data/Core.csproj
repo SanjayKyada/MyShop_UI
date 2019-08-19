@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,12 +43,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbsBase.cs" />
+    <Compile Include="Contract\IBasketService.cs" />
     <Compile Include="Contract\IRepositoryBase.cs" />
     <Compile Include="Model\Basket.cs" />
     <Compile Include="Model\BasketItem.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\BasketProductViewModel.cs" />
+    <Compile Include="ViewModel\BasketSummaryViewModel.cs" />
     <Compile Include="ViewModel\ProductCategoryModel.cs" />
     <Compile Include="ViewModel\ProductListViewModel.cs" />
   </ItemGroup>

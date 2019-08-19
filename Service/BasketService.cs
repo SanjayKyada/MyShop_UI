@@ -1,13 +1,15 @@
-﻿using Core.Model;
+﻿using Core.Contract;
+using Core.Model;
+using Core.ViewModel;
 using Data.Model;
-using DataAccess.InMemory;
-using System.Web;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Service
 {
-    public class BasketService
+    public class BasketService : IBasketService
     {
         IRepositoryBase<Product> productCollection;
         IRepositoryBase<Basket> basketCollection;
@@ -101,7 +103,57 @@ namespace Service
                 basketCollection.Commit();
             }
         }
-    }
 
+        //Get All Basket's Items with Price/Product image/Qty.
+        public List<BasketProductViewModel> GetAllBasketItems(HttpContextBase contextBase)
+        {
+            Basket basketObj = GetBasket(contextBase, false);
+
+            if (basketObj != null)
+            {
+                var results = (from basket in basketObj.BasketList
+                               join productObj in productCollection.GetAllData()
+                               on basket.ProductId equals productObj.Id
+                               select new BasketProductViewModel()
+                               {
+                                   BId = basket.Id,
+                                   Qty = basket.Qty,
+                                   Price = productObj.Price,
+                                   ImagePath = productObj.Image,
+                                   ProductName = productObj.Name
+                               }).ToList();
+                return results;
+            }
+            else
+            {
+                return new List<BasketProductViewModel>();
+            }
+        }
+
+        //get summary of basket.
+        public BasketSummaryViewModel GetBasketSummary(HttpContextBase contextBase)
+        {
+            Basket basket = GetBasket(contextBase, false);
+            BasketSummaryViewModel model = new BasketSummaryViewModel(0, 0);
+            if (basket != null)
+            {
+                int? TotalQty = (from b in basket.BasketList
+                                 select b.Qty
+                               ).Sum();
+
+                decimal? TotalAmount = (from b in basket.BasketList
+                                        join p in productCollection.GetAllData()
+                                         on b.ProductId equals p.Id
+                                        select p.Price * b.Qty
+                                                     ).Sum();
+                model.TotalPrice = TotalAmount ?? decimal.Zero;
+                model.TotalQty = TotalQty ?? 0;
+            }
+            return model;
+        }
+
+    }
 }
+
+
 
