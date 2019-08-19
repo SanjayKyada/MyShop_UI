@@ -1,7 +1,6 @@
-﻿using Core;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.Model
+namespace Core.Model
 {
     public class Product : AbsBase
     {

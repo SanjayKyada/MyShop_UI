@@ -1,5 +1,4 @@
 ﻿using Core.Model;
-using Data.Model;
 using System.Data.Entity;
 
 namespace DataAccess.SQL

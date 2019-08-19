@@ -1,6 +1,5 @@
+using Core.Contract;
 using Core.Model;
-using Data.Model;
-using DataAccess.InMemory;
 using DataAccess.SQL;
 using System;
 

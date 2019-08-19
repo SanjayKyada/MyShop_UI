@@ -1,7 +1,6 @@
-﻿using Core.Model;
+﻿using Core.Contract;
+using Core.Model;
 using Core.ViewModel;
-using Data.Model;
-using DataAccess.InMemory;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;

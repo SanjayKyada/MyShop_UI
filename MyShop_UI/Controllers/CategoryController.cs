@@ -1,10 +1,7 @@
-﻿using Core.Model;
-using System;
-using System.Collections.Generic;
+﻿using Core.Contract;
+using Core.Model;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using DataAccess.InMemory;
 
 namespace MyShop_UI.Controllers
 {
