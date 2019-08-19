@@ -9,7 +9,7 @@
         @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" });
         @foreach (var item in Model.CategoryListObj)
         {
-            @Html.ActionLink(item.Name, "Index", new { Category = item.Name }, new { @class = Request["Category"] == item.Name   ? "list-group-item active" : "list-group-item" });
+            @Html.ActionLink(item.Name, "Index", new { Category = item.Name }, new { @class = Request["Category"] == item.Name ? "list-group-item active" : "list-group-item" });
         }
     </div>
 </div>
@@ -31,7 +31,7 @@
                 <h3>$@item.Price</h3>
             </div>
             <div class="col-md-12">
-                <a href="#" class="btn btn-default"> Add to Basket</a>
+                <a href="@Url.Action("AddInBasket","Basket",new {ProductId=item.Id })" class="btn btn-default"> Add to Basket</a>
             </div>
         </div>
     }

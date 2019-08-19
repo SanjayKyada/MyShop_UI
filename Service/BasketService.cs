@@ -1,7 +1,6 @@
 ﻿using Core.Contract;
 using Core.Model;
 using Core.ViewModel;
-using Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,9 +60,11 @@ namespace Service
             basketCollection.Add(basketNewobj);
             basketCollection.Commit();
 
-            HttpCookie cookie = new HttpCookie(CookieName);
-            cookie.Value = basketNewobj.Id;
-            cookie.Expires = DateTime.Now.AddDays(-1);
+            HttpCookie cookie = new HttpCookie(CookieName)
+            {
+                Value = basketNewobj.Id,
+                Expires = DateTime.Now.AddDays(60)
+            };
             contextBase.Response.Cookies.Add(cookie);
             return basketNewobj;
         }
@@ -95,7 +96,7 @@ namespace Service
         public void RemoveProductFromBasket(HttpContextBase contextBase, string basketItemID)
         {
             Basket basketObj = GetBasket(contextBase, true);
-            BasketItem basketItem = basketObj.BasketList.FirstOrDefault(x => x.BucketId == basketItemID);
+            BasketItem basketItem = basketObj.BasketList.FirstOrDefault(x => x.Id == basketItemID);
 
             if (basketItem != null)
             {

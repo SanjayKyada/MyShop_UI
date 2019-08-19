@@ -1,4 +1,4 @@
-﻿@model Data.Model.Product
+﻿@model Core.Model.Product
 
 @{
     ViewBag.Title = Model.Name + " Details";
@@ -40,7 +40,7 @@
             </dt>
 
             <dd>
-                <a href="#" class="btn btn-default">Add to bucket</a>
+                <a href="@Url.Action("AddInBasket","Basket",new { ProductId=Model.Id})" class="btn btn-default">Add to basket</a>
             </dd>
             <dt>
             </dt>

@@ -26,6 +26,10 @@
                     <li>@Html.ActionLink("Category", "Index", "Category")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
+                @{
+
+                    Html.RenderAction("BasketSummary", "Basket");
+                }
             </div>
         </div>
     </div>

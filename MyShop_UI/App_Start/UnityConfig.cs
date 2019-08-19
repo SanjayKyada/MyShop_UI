@@ -1,6 +1,7 @@
 using Core.Contract;
 using Core.Model;
 using DataAccess.SQL;
+using Service;
 using System;
 
 using Unity;
@@ -48,6 +49,9 @@ namespace MyShop_UI
             //==> Below lines are used for solve ==> Passing object's in controller at runtime in their constructor.
             container.RegisterType<IRepositoryBase<Product>, SqlRepository<Product>>();
             container.RegisterType<IRepositoryBase<Category>, SqlRepository<Category>>();
+            container.RegisterType<IRepositoryBase<Basket>, SqlRepository<Basket>>();
+            container.RegisterType<IRepositoryBase<BasketItem>, SqlRepository<BasketItem>>();
+            container.RegisterType<IBasketService, BasketService>();
 
         }
     }
